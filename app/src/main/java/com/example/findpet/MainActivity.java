@@ -5,24 +5,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
-import android.widget.LinearLayout;
+import android.view.View;
+import android.widget.Button;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
-import java.security.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -38,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     LinearLayoutManager layoutManager;
     List<ModelClass> petList;
     Adapter adapter;
+    Button sortnameasc, sortagedesc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,12 +45,45 @@ public class MainActivity extends AppCompatActivity {
 
         initData();
         initRecyclerView();
+        initSortButtons();
+        initSearchButton();
 
         try {
-            populateAllPets();
+            populateAllPets(false,"","", false,"");
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+    }
+
+    private void initSearchButton() {
+        
+    }
+
+    private void initSortButtons() {
+        sortnameasc = findViewById(R.id.sortbyname);
+        sortagedesc = findViewById(R.id.sortbyage);
+
+        sortnameasc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    populateAllPets(true, "asc", "name",false,"");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        sortagedesc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    populateAllPets(true, "asc", "bornAt", false,"");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
     }
 
@@ -74,13 +106,17 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void populateAllPets() throws IOException {
+    private void populateAllPets(boolean sort, String sortOrder, String sortParameter, boolean search, String searchname) throws IOException {
 
         OkHttpClient client = new OkHttpClient();
 
-        String url = "https://60d075407de0b20017108b89.mockapi.io/api/v1/animals";
+        Uri.Builder path = Uri.parse("https://60d075407de0b20017108b89.mockapi.io/api/v1/animals").buildUpon();
+        if(sort){
+            path = path.appendQueryParameter("sortBy",sortParameter);
+            path = path.appendQueryParameter("order",sortOrder);
+        }
         Request request = new Request.Builder()
-                .url(url)
+                .url(path.build().toString())
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
@@ -101,15 +137,12 @@ public class MainActivity extends AppCompatActivity {
                         Date actual_time = format.parse(time);
 
                         long timestamp = actual_time.getTime();
-
                         int elapsedTime = (int)(System.currentTimeMillis()/60000 - timestamp/60000);
-                        Log.d("Hi",elapsedTime+"");
                         long elapsedMonths = (elapsedTime)/(24*30*60);
-
                         long elapsedDays = (elapsedTime)/(24*60);
                         long elapsedYears = (elapsedTime)/(24*365*60);
                         long elapsedHours = (elapsedTime)/(60);
-                        Log.d("Hi",(elapsedTime)+"");
+                        //Log.d("Hi",(elapsedTime)+"");
 
                         if ( elapsedYears > 0)
                         {

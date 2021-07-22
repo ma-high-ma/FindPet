@@ -29,9 +29,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#ffffff"
-                android:text="Sort"
+                android:text="Sort By Name Asc"
                 android:textColor="@color/black"
-                android:id="@+id/button1"
+                android:id="@+id/sortbyname"
                 android:layout_margin="5dp"
                 android:textSize="10sp"/>
 
@@ -39,8 +39,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#ffffff"
-                android:text="Filter"
-                android:id="@+id/btn2"
+                android:text="Sort By Age Desc"
+                android:id="@+id/sortbyage"
+                android:textColor="@color/black"
+                android:layout_margin="5dp"
+                android:textSize="10sp"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#ffffff"
+                android:text="Search"
+                android:id="@+id/search"
                 android:textColor="@color/black"
                 android:layout_margin="5dp"
                 android:textSize="10sp"/>
