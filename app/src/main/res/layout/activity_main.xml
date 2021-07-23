@@ -12,13 +12,15 @@
         android:orientation="vertical"
         android:padding="5dp">
 
-        <TextView
+        <SearchView
+            android:id="@+id/searchView"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="Search Pets"
-            android:id="@+id/search"
-            android:gravity="left|center"
-            android:padding="10dp" />
+            android:layout_height="60dp"
+            android:queryHint="Search Pets"
+            android:iconifiedByDefault="false"
+            android:layout_alignParentTop="true"
+            />
+
 
         <LinearLayout
             android:layout_width="match_parent"

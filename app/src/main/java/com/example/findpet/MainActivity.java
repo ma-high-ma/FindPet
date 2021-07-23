@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.SearchView;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     List<ModelClass> petList;
     Adapter adapter;
     Button sortnameasc, sortagedesc;
+    SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +60,40 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initSearchButton() {
-        
+        searchView = findViewById(R.id.searchView);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                try {
+                    if (!query.isEmpty()) {
+                        populateAllPets(false, "", "", true, query);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+
+        });
+        int clearButton = searchView.getContext().getResources().getIdentifier("android:id/search_close_btn", null, null);
+        ImageView clearButtonImg = findViewById(clearButton);
+        clearButtonImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    populateAllPets(false,"","",false,"");
+                    Log.d("Hi","Search");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     private void initSortButtons() {
@@ -115,6 +151,12 @@ public class MainActivity extends AppCompatActivity {
             path = path.appendQueryParameter("sortBy",sortParameter);
             path = path.appendQueryParameter("order",sortOrder);
         }
+
+        if (search)
+        {
+            path = path.appendQueryParameter("search", searchname);
+        }
+
         Request request = new Request.Builder()
                 .url(path.build().toString())
                 .build();
