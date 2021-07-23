@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">FindPet</string>
+    <string name="app_name">My Pets</string>
+    <string name="baseurl">https://60d075407de0b20017108b89.mockapi.io/api/v1/animals</string>
+    <string name="queryhint">Search Pets</string>
+    <string name="sort_by_name_asc">Sort By Name Asc</string>
+    <string name="sort_by_age_desc">Sort By Age Desc</string>
+    <string name="textviewage">2 months</string>
 </resources>

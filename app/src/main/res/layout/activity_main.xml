@@ -10,15 +10,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="5dp">
+        android:padding="10dp">
 
         <SearchView
             android:id="@+id/searchView"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:queryHint="Search Pets"
+            android:queryHint="@string/queryhint"
+            android:background="@drawable/searchviewboundary"
             android:iconifiedByDefault="false"
             android:layout_alignParentTop="true"
+
+
             />
 
 
@@ -31,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#ffffff"
-                android:text="Sort By Name Asc"
+                android:text="@string/sort_by_name_asc"
                 android:textColor="@color/black"
                 android:id="@+id/sortbyname"
                 android:layout_margin="5dp"
@@ -41,22 +44,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#ffffff"
-                android:text="Sort By Age Desc"
+                android:text="@string/sort_by_age_desc"
                 android:id="@+id/sortbyage"
                 android:textColor="@color/black"
                 android:layout_margin="5dp"
                 android:textSize="10sp"/>
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#ffffff"
-                android:text="Search"
-                android:id="@+id/search"
-                android:textColor="@color/black"
-                android:layout_margin="5dp"
-                android:textSize="10sp"/>
-
 
         </LinearLayout>
 

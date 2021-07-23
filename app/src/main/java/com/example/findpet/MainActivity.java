@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 try {
                     populateAllPets(false,"","",false,"");
+                    searchView.setQuery("", false);
                     Log.d("Hi","Search");
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -146,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
 
         OkHttpClient client = new OkHttpClient();
 
-        Uri.Builder path = Uri.parse("https://60d075407de0b20017108b89.mockapi.io/api/v1/animals").buildUpon();
+        Uri.Builder path = Uri.parse(getString(R.string.baseurl)).buildUpon();
         if(sort){
             path = path.appendQueryParameter("sortBy",sortParameter);
             path = path.appendQueryParameter("order",sortOrder);
@@ -188,19 +189,31 @@ public class MainActivity extends AppCompatActivity {
 
                         if ( elapsedYears > 0)
                         {
-                            actualAge = elapsedYears + " Years";
+                            if (elapsedYears == 1)
+                                actualAge = elapsedYears + " Year";
+                            else
+                                actualAge = elapsedYears + " Years";
                         }
                         else if (elapsedMonths > 0)
                         {
-                            actualAge = elapsedMonths + " Months";
+                            if (elapsedMonths == 1)
+                                actualAge = elapsedMonths + " Month";
+                            else
+                                actualAge = elapsedMonths + " Months";
                         }
                         else if (elapsedDays > 0)
                         {
-                            actualAge = elapsedDays + " Days";
+                            if (elapsedDays == 1)
+                                actualAge = elapsedDays + " Day";
+                            else
+                                actualAge = elapsedDays + " Day";
                         }
                         else
                         {
-                            actualAge = elapsedHours + " Hours";
+                            if (elapsedHours == 1)
+                                actualAge = elapsedHours + " Hour";
+                            else
+                                actualAge = elapsedHours + " Hours";
                         }
 
                         petList.add(new ModelClass(jsonArray.getJSONObject(i).getString("name"), actualAge+""));
